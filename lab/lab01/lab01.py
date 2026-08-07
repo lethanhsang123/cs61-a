@@ -1,3 +1,6 @@
+import sys
+import doctest
+
 def digit(n, k):
     """Return the k-th digit from the right of n for positive integers n and k.
 
@@ -8,7 +11,7 @@ def digit(n, k):
     >>> digit(3579, 10)
     0
     """
-    return ____
+    return (n // pow(10, k)) % 10
 
 
 def middle(a, b, c):
@@ -26,7 +29,10 @@ def middle(a, b, c):
     >>> middle(30, 5, 40)
     30
     """
-    return ____
+    sum = a + b + c;
+    minNumber = min(a, b, c);
+    maxNumber = max(a, b, c);
+    return (sum - minNumber - maxNumber)
 
 
 def falling(n, k):
@@ -41,7 +47,9 @@ def falling(n, k):
     >>> falling(4, 0)
     1
     """
-    "*** YOUR CODE HERE ***"
+    if k == 0:
+        return 1
+    return n * falling(n - 1, k - 1)
 
 
 def divisible_by_k(n, k):
@@ -64,7 +72,13 @@ def divisible_by_k(n, k):
     >>> c
     0
     """
-    "*** YOUR CODE HERE ***"
+    count = 0
+    current = k
+    while current <= n:
+        print(current)
+        current += k
+        count += 1
+    return count
 
 
 def sum_digits(y):
@@ -80,7 +94,11 @@ def sum_digits(y):
     >>> a
     6
     """
-    "*** YOUR CODE HERE ***"
+    sum = 0
+    while y > 0:
+        sum += y % 10
+        y //= 10
+    return sum
 
 
 def double_eights(n):
@@ -98,5 +116,35 @@ def double_eights(n):
     >>> double_eights(80808080)
     False
     """
-    "*** YOUR CODE HERE ***"
+    while n >= 10:
+        if n % 10 == 8 and (n // 10) % 10 == 8:
+            return True
+        n //= 10
+    return False
 
+
+if __name__ == "__main__":
+
+    tests = {
+        "digit": digit,
+        "middle": middle,
+        "falling": falling,
+        "divisible_by_k": divisible_by_k,
+        "sum_digits": sum_digits,
+        "double_eights": double_eights,
+    }
+
+    if len(sys.argv) == 2:
+        name = sys.argv[1]
+
+        if name in tests:
+            doctest.run_docstring_examples(
+                tests[name],
+                globals(),
+                verbose=True
+            )
+        else:
+            print(f"Unknown function: {name}")
+
+    else:
+        doctest.testmod(verbose=True)
