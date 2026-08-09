@@ -193,4 +193,13 @@ pyrightconfig.json
 .history
 .ionide
 
+### UCB 61A Patch ###
+# Ignore all files in the homework directory except for .py files
+*.ok_consent
+*.ok_disabled
+*.ok_history
+*.ok_submitted
+*.ok_messages
+*.ok_storage
+
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,python
