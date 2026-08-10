@@ -1,4 +1,6 @@
 from operator import add, mul
+import sys
+import doctest
 
 def square(x):
     return x * x
@@ -35,7 +37,10 @@ def product(n, term):
     >>> product(3, triple)    # 1*3 * 2*3 * 3*3
     162
     """
-    "*** YOUR CODE HERE ***"
+    result = 1
+    for i in range(1, n + 1):
+        result = result * term(i)
+    return result
 
 
 def accumulate(fuse, start, n, term):
@@ -57,7 +62,10 @@ def accumulate(fuse, start, n, term):
     >>> accumulate(lambda x, y: x + y + 1, 2, 3, square)
     19
     """
-    "*** YOUR CODE HERE ***"
+    for i in range(1, n + 1):
+        temp = term(i)
+        start = fuse(start, temp)
+    return start
 
 
 def summation_using_accumulate(n, term):
@@ -72,7 +80,7 @@ def summation_using_accumulate(n, term):
     >>> [type(x).__name__ for x in ast.parse(inspect.getsource(summation_using_accumulate)).body[0].body]
     ['Expr', 'Return']
     """
-    return ____
+    return accumulate(add, 1, 5, term)
 
 
 def product_using_accumulate(n, term):
@@ -87,7 +95,7 @@ def product_using_accumulate(n, term):
     >>> [type(x).__name__ for x in ast.parse(inspect.getsource(product_using_accumulate)).body[0].body]
     ['Expr', 'Return']
     """
-    return ____
+    return accumulate(mul, 1, n, term)
 
 
 def make_repeater(f, n):
@@ -103,5 +111,33 @@ def make_repeater(f, n):
     >>> make_repeater(square, 3)(5) # square(square(square(5)))
     390625
     """
-    "*** YOUR CODE HERE ***"
+    def repeater(x): 
+        for _ in range(n):
+            x = f(x)
+        return x
+    return repeater
 
+if __name__ == "__main__":
+
+    tests = {
+        "product": product,
+        "accumulate": accumulate,
+        "summation_using_accumulate": summation_using_accumulate,
+        "product_using_accumulate": product_using_accumulate,
+        "make_repeater": make_repeater
+    }
+
+    if len(sys.argv) == 2:
+        name = sys.argv[1]
+
+        if name in tests:
+            doctest.run_docstring_examples(
+                tests[name],
+                globals(),
+                verbose=True
+            )
+        else:
+            print(f"Unknown function: {name}")
+
+    else:
+        doctest.testmod(verbose=True)
