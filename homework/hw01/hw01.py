@@ -1,4 +1,6 @@
 from operator import add, sub
+import sys
+import doctest
 
 def a_plus_abs_b(a, b):
     """Return a+abs(b), but without calling abs.
@@ -28,7 +30,6 @@ def a_plus_abs_b_syntax_check():
     """
     # You don't need to edit this function. It's just here to check your work.
 
-
 def two_of_three(i, j, k):
     """Return m*m + n*n, where m and n are the two smallest members of the
     positive numbers i, j, and k.
@@ -42,7 +43,9 @@ def two_of_three(i, j, k):
     >>> two_of_three(5, 5, 5)
     50
     """
-    return _____
+    m = min(i, j, k)
+    n = max(min(i, j), min(j, k), min(i, k))
+    return (m * m) + (n * n)
 
 def two_of_three_syntax_check():
     """Check that your two_of_three code consists of nothing but a return statement.
@@ -54,7 +57,6 @@ def two_of_three_syntax_check():
     """
     # You don't need to edit this function. It's just here to check your work.
 
-
 def largest_factor(n):
     """Return the largest factor of n that is smaller than n.
 
@@ -65,8 +67,12 @@ def largest_factor(n):
     >>> largest_factor(13) # factors are 1, 13
     1
     """
-    "*** YOUR CODE HERE ***"
-
+    largest_factor = 0
+    for i in range (1, n):
+        if (n%i == 0):
+            largest_factor = i
+    if (largest_factor != 0):
+        print(largest_factor)
 
 def hailstone(n):
     """Print the hailstone sequence starting at n and return its
@@ -87,5 +93,39 @@ def hailstone(n):
     >>> b
     1
     """
-    "*** YOUR CODE HERE ***"
+    hailstone_length = 0
+    while(n > 0):
+        hailstone_length += 1
+        print(n)
+        if (n == 1):
+            break
+        elif(n % 2 == 0):
+            n = n / 2
+        else:
+            n = (3 * n) + 1
+    return hailstone_length
+
+if __name__ == "__main__":
+
+    tests = {
+        "a_plus_abs_b": a_plus_abs_b,
+        "two_of_three": two_of_three,
+        "largest_factor": largest_factor,
+        "hailstone": hailstone
+    }
+
+    if len(sys.argv) == 2:
+        name = sys.argv[1]
+
+        if name in tests:
+            doctest.run_docstring_examples(
+                tests[name],
+                globals(),
+                verbose=True
+            )
+        else:
+            print(f"Unknown function: {name}")
+
+    else:
+        doctest.testmod(verbose=True)
 
