@@ -1,7 +1,8 @@
 """The Game of Hog."""
 
-from dice import six_sided, make_test_dice
+from dice import six_sided, make_test_dice, make_fair_dice
 from ucb import main, trace, interact
+import math
 
 GOAL = 100  # The goal of Hog is to score 100 points.
 
@@ -21,7 +22,14 @@ def roll_dice(num_rolls, dice=six_sided):
     assert type(num_rolls) == int, "num_rolls must be an integer."
     assert num_rolls > 0, "Must roll at least once."
     # BEGIN PROBLEM 1
-    "*** YOUR CODE HERE ***"
+    scores = 0
+    for i in range(0, num_rolls):
+        score_in_turn = dice()
+        if score_in_turn == 1:
+            scores = 1
+        elif scores != 1:
+            scores += score_in_turn
+    return scores
     # END PROBLEM 1
 
 
@@ -33,8 +41,12 @@ def boar_brawl(player_score, opponent_score):
 
     """
     # BEGIN PROBLEM 2
-    "*** YOUR CODE HERE ***"
+    ten_digit_opponent_score = (opponent_score // 10) % 10
+    one_digit_player_score = player_score % 10
+    score = 3 * (abs(ten_digit_opponent_score - one_digit_player_score))
+    return max(1, score)
     # END PROBLEM 2
+    
 
 
 def take_turn(num_rolls, player_score, opponent_score, dice=six_sided):
@@ -51,7 +63,9 @@ def take_turn(num_rolls, player_score, opponent_score, dice=six_sided):
     assert num_rolls >= 0, "Cannot roll a negative number of dice in take_turn."
     assert num_rolls <= 10, "Cannot roll more than 10 dice."
     # BEGIN PROBLEM 3
-    "*** YOUR CODE HERE ***"
+    if num_rolls == 0: return boar_brawl(player_score, opponent_score)
+    else:
+        return roll_dice(num_rolls, dice)
     # END PROBLEM 3
 
 
