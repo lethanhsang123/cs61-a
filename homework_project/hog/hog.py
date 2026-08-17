@@ -2,7 +2,6 @@
 
 from dice import six_sided, make_test_dice, make_fair_dice
 from ucb import main, trace, interact
-import math
 
 GOAL = 100  # The goal of Hog is to score 100 points.
 
@@ -92,14 +91,22 @@ def is_prime(n):
 def num_factors(n):
     """Return the number of factors of N, including 1 and N itself."""
     # BEGIN PROBLEM 4
-    "*** YOUR CODE HERE ***"
+    number_factors = 0
+    for i in range(1, n + 1):
+        if n % i == 0 : 
+            number_factors += 1
+    return number_factors
     # END PROBLEM 4
 
 
 def sus_points(score):
     """Return the new score of a player taking into account the Sus Fuss rule."""
-    # BEGIN PROBLEM 4
-    "*** YOUR CODE HERE ***"
+    number_factors = num_factors(score)
+    if (number_factors == 3 or number_factors == 4):
+        score += 1
+        while not is_prime(score):
+            score += 1
+    return score
     # END PROBLEM 4
 
 
@@ -108,7 +115,9 @@ def sus_update(num_rolls, player_score, opponent_score, dice=six_sided):
     PLAYER_SCORE and then rolls NUM_ROLLS DICE, *including* Sus Fuss.
     """
     # BEGIN PROBLEM 4
-    "*** YOUR CODE HERE ***"
+    player_in_turn_score = take_turn(num_rolls, player_score, opponent_score, dice)
+    player_in_turn_score += player_score
+    return sus_points(player_in_turn_score)
     # END PROBLEM 4
 
 
