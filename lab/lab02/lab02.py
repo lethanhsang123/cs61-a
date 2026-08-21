@@ -78,8 +78,31 @@ def multiple(a, b):
     >>> multiple(14, 21)
     42
     """
-    "*** YOUR CODE HERE ***"
+    result = 1
+    a_factors = prime_factors(a)
+    b_factors = prime_factors(b)
+    factors = set(a_factors + b_factors)
+    for factor in factors :
+        a_factor_count = a_factors.count(factor)
+        b_factor_count = b_factors.count(factor)
+        result *= factor ** max(a_factor_count, b_factor_count)
+    return result
 
+
+
+def prime_factors(n):
+    """n is a positive integer. Return prime factor numbers of integer n"""
+    factor_numbers = []
+    d = 2;
+    while d * d <= n :
+        if n % d != 0 :
+            d += 1
+        else :
+            n //= d
+            factor_numbers.append(d)
+    if n > 1 :
+        factor_numbers.append(n)
+    return factor_numbers
 
 
 def cycle(f1, f2, f3):
