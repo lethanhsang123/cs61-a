@@ -22,3 +22,45 @@ def luhn_sum_double(n):
         return luhn_digit
     else:
         return luhn_sum(all_but_last) + luhn_digit
+
+def cascade_v1(n):
+    if n < 10:
+        print(n)
+    else:
+        print(n)
+        cascade_v1(n//10)
+        print(n)
+
+def cascade_v2(n):
+    print(n)
+    if n >= 10:
+        cascade_v2(n//10)
+        print(n)
+
+def inverse_cascade(n):
+    if n < 10:
+        print(n)
+    else:
+        grow(n//10)
+        print(n)
+        shirnk(n//10)  
+        
+def grow(n):
+    if n >= 10:
+        grow(n//10)
+    print(n)
+
+def shirnk(n):
+    if n < 10:
+        print(n)
+    else:
+        print(n)
+        shirnk(n//10)
+
+def fib(n):
+    if n == 0:
+        return 0
+    elif n == 1:
+        return 1
+    else:
+        return fib(n - 2) + fib(n - 1)
