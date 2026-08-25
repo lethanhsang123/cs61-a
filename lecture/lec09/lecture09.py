@@ -64,3 +64,10 @@ def fib(n):
         return 1
     else:
         return fib(n - 2) + fib(n - 1)
+
+def counting_partitions(n, m):
+    if n == 0: 
+        return 1
+    if n < 0 or m == 0:
+        return 0
+    return counting_partitions(n - m, m) + counting_partitions(n, m-1)
