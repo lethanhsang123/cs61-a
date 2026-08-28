@@ -24,8 +24,12 @@ def num_eights(num):
     ...       ['Assign', 'AnnAssign', 'AugAssign', 'NamedExpr', 'For', 'While'])
     True
     """
-    "*** YOUR CODE HERE ***"
-
+    if num < 10:
+        return 1 if num == 8 else 0
+    elif num % 10 == 8:
+        return 1 + num_eights(num // 10)
+    else:
+        return num_eights(num // 10)
 
 def digit_distance(num):
     """Determines the digit distance of num.
@@ -46,8 +50,10 @@ def digit_distance(num):
     ...       ['For', 'While'])
     True
     """
-    "*** YOUR CODE HERE ***"
-
+    if num < 10:
+        return 0
+    else:
+        return (abs((num//10)%10 - num%10)) + digit_distance(num//10)
 
 def interleaved_sum(num, f_odd, f_even):
     """Compute the sum f_odd(1) + f_even(2) + f_odd(3) + ..., up
@@ -70,8 +76,12 @@ def interleaved_sum(num, f_odd, f_even):
     >>> check(SOURCE_FILE, 'interleaved_sum', ['BitAnd', 'BitOr', 'BitXor']) # ban bitwise operators, don't worry about these if you don't know what they are
     True
     """
-    "*** YOUR CODE HERE ***"
-
+    def func_num(number, func):
+        if number > num:
+            return 0
+        else:
+            return func(number) + func_num(number + 2, func)
+    return func_num(1, f_odd) + func_num(2, f_even)
 
 def next_smaller_dollar(bill):
     """Returns the next smaller bill in order."""
