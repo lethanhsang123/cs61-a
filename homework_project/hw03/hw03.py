@@ -117,6 +117,16 @@ def count_dollars(sum_needed):
     True
     """
     "*** YOUR CODE HERE ***"
+    def count(amount, bill):
+        if amount == 0:
+            return 1
+        elif amount < 0:
+            return 0
+        elif bill is None:
+            return 0
+        return count(amount - bill, bill) + count(amount, next_smaller_dollar(bill))
+    return count(sum_needed, 100)
+
 
 
 def next_larger_dollar(bill):
@@ -152,7 +162,17 @@ def count_dollars_upward(sum_needed):
     >>> check(SOURCE_FILE, 'count_dollars_upward', ['While', 'For'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    def count(amount, bill): 
+        # base cases
+        if amount == 0:
+            return 1
+        elif amount < 0:
+            return 0
+        elif bill is None:
+            return 0
+        # partitions
+        return count(amount - bill, bill) + count(amount, next_larger_dollar(bill))
+    return count(sum_needed, 1)
 
 
 def print_move(origin, destination):
