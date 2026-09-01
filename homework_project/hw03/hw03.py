@@ -207,7 +207,17 @@ def move_stack(num, start, end):
     Move the top disk from rod 1 to rod 3
     """
     assert 1 <= start <= 3 and 1 <= end <= 3 and start != end, "Bad start/end"
-    "*** YOUR CODE HERE ***"
+    if num == 1:
+        print_move(start, end)
+        return
+
+    other = 6 - start - end
+
+    move_stack(num - 1, start, other)
+
+    print_move(start, end)
+
+    move_stack(num - 1, other, end)
 
 
 from operator import sub, mul
