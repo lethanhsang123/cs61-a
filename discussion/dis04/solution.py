@@ -1,7 +1,6 @@
 def paths(m: int, n: int) -> int:
     """
-    Return the number of paths from one corner of an M by N grid
-    to the opposite corner.
+    Return the number of paths from bottom-left corner(1-1) of an M by N grid to the opposite corner (M-N).
 
     Concept: Track the insect's current position from one corner
     to the opposite corner.
@@ -23,6 +22,7 @@ def paths(m: int, n: int) -> int:
 
 def paths2(m, n):
     """
+    Return the number of paths from bottom-left corner(1-1) of an M by N grid to the opposite corner (M-N)
     Concept: Track the size of the remaining grid.
 
     Base case:
