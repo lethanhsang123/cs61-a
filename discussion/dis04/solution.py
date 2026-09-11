@@ -20,6 +20,7 @@ def paths(m: int, n: int) -> int:
 
     return path_from(0, 0)
 
+
 def paths2(m, n):
     """
     Return the number of paths from bottom-left corner(1-1) of an M by N grid to the opposite corner (M-N)
@@ -35,9 +36,12 @@ def paths2(m, n):
 
     return paths2(m - 1, n) + paths2(m, n - 1)
 
+
 def max_product(s):
     """Return the maximun product of non-consecutive elements of s"""
-    l = len(s)
-    max = s[0];
-    
-    return max
+    if len(s) == 0:
+        return 1
+    a = s[0] * max_product(s[2:])
+    b = 1 * max_product(s[1:])
+    return max(a, b)
+
