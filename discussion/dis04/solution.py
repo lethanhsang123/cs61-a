@@ -45,3 +45,21 @@ def max_product(s):
     b = 1 * max_product(s[1:])
     return max(a, b)
 
+
+def sums(n: int, m: int):
+    """Return lists that sum to n containing positive numbers up to m thathave no adjacent repeats"""
+
+    def helper(remaining, previous):
+        if remaining == 0:
+            return [[]]
+
+        result = []
+
+        for x in range(1, min(m, remaining) + 1):
+            if x == previous:
+                continue
+            for rest in helper(remaining - x, x):
+                result.append([x] + rest)
+        return result
+
+    return helper(n, None)
