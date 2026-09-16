@@ -63,3 +63,17 @@ def sums(n: int, m: int):
         return result
 
     return helper(n, None)
+
+
+def fit(total, n):
+    """Return whether there are n positive perfect squares that sums to total"""
+
+    def f(total, n, k):
+        if n == 0 and total == 0:
+            return True
+        elif total < k * k:
+            return False
+        else:
+            return f(total - (k * k), n - 1, k) or f(total, n, k + 1)
+
+    return f(total, n, 1)
