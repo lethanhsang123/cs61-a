@@ -131,7 +131,10 @@ def wpm(entered: str, elapsed: int) -> float:
     """
     assert elapsed > 0, "Elapsed time must be positive"
     # BEGIN PROBLEM 4
-    "*** YOUR CODE HERE ***"
+    entered_length = len(entered)
+    word_number = entered_length / 5
+    entered_time = elapsed / 60
+    return word_number / entered_time
     # END PROBLEM 4
 
 
@@ -196,7 +199,18 @@ def autocorrect(
     'testing'
     """
     # BEGIN PROBLEM 5
-    "*** YOUR CODE HERE ***"
+    if word_list.__contains__(entered_word):
+        return entered_word
+    lowest_different_word = ""
+    lowest_different_value = 10000
+    for word in word_list:
+        different_value = diff_function(entered_word, word, limit)
+        if different_value < lowest_different_value:
+            lowest_different_value = different_value
+            lowest_different_word = word
+    if lowest_different_value > limit:
+        return entered_word
+    return lowest_different_word
     # END PROBLEM 5
 
 
@@ -223,7 +237,15 @@ def furry_fixes(entered: str, source: str, limit: int) -> int:
     5
     """
     # BEGIN PROBLEM 6
-    assert False, "Remove this line"
+    entered_length = len(entered)
+    source_length = len(source)
+    if entered_length == 0 or source_length == 0:
+        return abs(entered_length - source_length)
+    if entered[0] != source[0]:
+        if limit < 0:
+            return 1
+        return 1 + furry_fixes(entered[1:], source[1:], limit - 1)
+    return furry_fixes(entered[1:], source[1:], limit)
     # END PROBLEM 6
 
 
@@ -452,4 +474,3 @@ def run(*args):
     args = parser.parse_args()
     if args.t:
         run_typing_test(args.topic)
-
