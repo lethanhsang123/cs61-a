@@ -43,7 +43,12 @@ def without(s: LinkedList, i: int) -> LinkedList:
     >>> without((), 0)
     ()
     """
-    "*** YOUR CODE HERE ***"  # replace the code below
+    if not isinstance(s, Link):
+        return ()
+    if i == 0:
+        return Link(s.rest)
+    elif i > 0:
+        return Link(s.first, without(s.rest, i - 1))
     return ()
 
 
@@ -62,7 +67,12 @@ def print_every_other(s: LinkedList) -> None:
     5
     >>> print_every_other(())
     """
-    "*** YOUR CODE HERE ***"
+    if not isinstance(s, Link):
+        return
+    if s.__sizeof__() <= 0:
+        return
+    print(s.first)
+    return print_every_other(s.rest)
 
 
 def store_digits(n: int) -> LinkedList[int]:
