@@ -46,7 +46,7 @@ def without(s: LinkedList, i: int) -> LinkedList:
     if not isinstance(s, Link):
         return ()
     if i == 0:
-        return Link(s.rest)
+        return s.rest
     elif i > 0:
         return Link(s.first, without(s.rest, i - 1))
     return ()
@@ -95,8 +95,47 @@ def store_digits(n: int) -> LinkedList[int]:
     ...  if isinstance(n, ast.Name) and n.id in ('str', 'reversed')]
     []
     """
-    "*** YOUR CODE HERE ***"  # replace the code below
-    return ()
+    if n < 10:
+        return Link(n, ())
+
+    rest = store_digits(n // 10)
+
+    def helper(rest, x: int):
+        if rest.rest == ():
+            return Link(rest.first, Link(x, ()))
+        return Link(rest.first, helper(rest.rest, x))
+
+    return helper(rest, n % 10)
+
+
+def store_digits2(n: int) -> LinkedList[int]:
+    """Stores the digits of a positive number n in a linked list.
+
+    >>> s = store_digits(1)
+    >>> s
+    Link(first=1, rest=())
+    >>> print(store_digits(2345))
+    (2 3 4 5)
+    >>> print(store_digits(876))
+    (8 7 6)
+    >>> print(store_digits(2450))
+    (2 4 5 0)
+    >>> print(store_digits(20105))
+    (2 0 1 0 5)
+    >>> # a check that you do not use str or reversed
+    >>> import inspect, ast
+    >>> [n.id for n in ast.walk(ast.parse(inspect.getsource(store_digits)))
+    ...  if isinstance(n, ast.Name) and n.id in ('str', 'reversed')]
+    []
+    """
+
+    def helper(rest, x):
+        if x < 10:
+            return Link(x, rest)
+        new_rest = Link(x % 10, rest)
+        return helper(new_rest, x // 10)
+
+    return helper((), n)
 
 
 def linked_sum(s: LinkedList[int], total: int) -> int:
