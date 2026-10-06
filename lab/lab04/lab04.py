@@ -72,7 +72,8 @@ def print_every_other(s: LinkedList) -> None:
     if s.__sizeof__() <= 0:
         return
     print(s.first)
-    return print_every_other(s.rest)
+    if s.rest != (): 
+        return print_every_other(s.rest.rest)
 
 
 def store_digits(n: int) -> LinkedList[int]:
@@ -151,14 +152,14 @@ def linked_sum(s: LinkedList[int], total: int) -> int:
     >>> linked_sum(Link(2, Link(4, Link(3))), 5)
     1
     """
-    if ____________________________:
+    if total == 0 or s.first == total:
         return 1
-    elif ____________________________:
+    elif s.first > total:
         return 0
     else:
-        with_first = ____________________________
-        without_first = ____________________________
-        return ____________________________
+        with_first = linked_sum(s, total - s.first)
+        without_first = linked_sum(s.rest, total)
+        return with_first + without_first
 
 
 def max_pair_sum(s: LinkedList[int]) -> int:
