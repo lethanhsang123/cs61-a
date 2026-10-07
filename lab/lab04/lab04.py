@@ -72,7 +72,7 @@ def print_every_other(s: LinkedList) -> None:
     if s.__sizeof__() <= 0:
         return
     print(s.first)
-    if s.rest != (): 
+    if s.rest != ():
         return print_every_other(s.rest.rest)
 
 
@@ -152,7 +152,7 @@ def linked_sum(s: LinkedList[int], total: int) -> int:
     >>> linked_sum(Link(2, Link(4, Link(3))), 5)
     1
     """
-    if total == 0 or s.first == total:
+    if s != () and (total == 0 or total == s.first):
         return 1
     elif s.first > total:
         return 0
