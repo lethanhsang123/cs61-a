@@ -1,5 +1,7 @@
 from tree import Tree, is_leaf
 
+from lecture.lec14.lecture import label
+
 
 def sum_leaves(t: Tree[int]) -> int:
     """Return the sum of the labels of the leaves of tree t
@@ -130,8 +132,10 @@ def only_paths(t: Tree[int], n: int) -> Tree[int] | None:
     >>> print(only_paths(t, 3))
     None
     """
-    if ____:
+    if is_leaf(t) and t.label == n:
         return t
-    new_branches = [____ for b in t.branches]
-    if ____(new_branches):
-        return Tree(t.label, [b for b in new_branches if ____])
+    new_branches = [only_paths(b, n - t.label) for b in t.branches]
+    successful_branches = [b for b in new_branches if b is not None]
+    if len(successful_branches) > 0:
+        return Tree(t.label, successful_branches)
+    return None
