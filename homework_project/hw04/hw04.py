@@ -158,8 +158,22 @@ def knapsack(treasures: list[Treasure], max_weight: int) -> LinkedList[Treasure]
     >>> knapsack([], 3)
     ()
     """
-    "*** YOUR CODE HERE ***"  # replace the code below
-    return ()
+    if treasures == ():
+        return ()
+    current_treasure = treasures[0]
+    rest_treasures = treasures[1:]
+
+    without = knapsack(rest_treasures, max_weight)
+    if current_treasure.weight > max_weight:
+        return without
+    with_current = Link(
+        current_treasure, knapsack(rest_treasures, max_weight - current_treasure.weight)
+    )
+
+    if total_worth(with_current) > total_worth(without):
+        return with_current
+    else:
+        return without
 
 
 def berry_finder(t: Tree) -> bool:
@@ -178,8 +192,9 @@ def berry_finder(t: Tree) -> bool:
     >>> berry_finder(t)
     True
     """
-    "*** YOUR CODE HERE ***"  # replace the code below
-    return False
+    if t.label == "berry":
+        return True
+    return any(berry_finder(b) for b in t.branches)
 
 
 def max_path_sum(t: Tree[int]) -> int:
@@ -198,5 +213,6 @@ def max_path_sum(t: Tree[int]) -> int:
     >>> max_path_sum(w) # -3
     -3
     """
-    "*** YOUR CODE HERE ***"  # replace the code below
-    return 0
+    if not t.branches:
+        return t.label
+    return t.label + max(0, max(max_path_sum(b) for b in t.branches))
